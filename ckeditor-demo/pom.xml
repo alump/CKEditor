@@ -134,6 +134,8 @@
 
 		</plugins>
 
+		<finalName>CKEditorDemo</finalName>
+
 	</build>
 
 	<profiles>
