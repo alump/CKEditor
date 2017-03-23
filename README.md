@@ -1,5 +1,7 @@
 # CKEditor Add-on for Vaadin
 
+[![Build Status](http://siika.fi:8888/jenkins/job/CKEditor%20(Vaadin)/badge/icon)](http://siika.fi:8888/jenkins/job/CKEditor%20(Vaadin)/)
+
 CKEditor is a UI component add-on for Vaadin 8.
 
 This project is fork of [vaadin-ckeditor](https://github.com/OpenESignForms/vaadin-ckeditor/tree/master/VaadinCKEditor) project from Yozons, Inc.
@@ -63,6 +65,9 @@ Debugging client side code in the ckeditor-demo project:
   - You can access Java-sources and set breakpoints inside Chrome if you enable source maps from inspector settings.
  
 ## Release notes
+
+### Version 0.1.1 (TBD)
+- TBD
 
 ### Version 0.1.0 (2017-03-23)
 - Initial release. Vaadin 8 port of Vaadin-CKEditor add-on from Yozons, Inc
