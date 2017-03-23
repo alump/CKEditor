@@ -1,0 +1,5 @@
+*.iml
+.idea/
+target/
+*.scss.cache
+ckeditor-demo/src/main/webapp/META-INF/

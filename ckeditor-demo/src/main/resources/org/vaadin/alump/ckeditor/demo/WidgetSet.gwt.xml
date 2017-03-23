@@ -1,0 +1,9 @@
+<module>
+
+	<!-- Inherit DefaultWidgetSet -->
+	<inherits name="com.vaadin.DefaultWidgetSet" />
+
+	
+
+    <inherits name="org.vaadin.alump.ckeditor.WidgetSet" />
+</module>

@@ -1,0 +1,15 @@
+Please notice that this project has multiple licenses.
+
+Add-on depends on CKEditor JavaScript library, so make sure you have correct license to use it:
+http://ckeditor.com/terms-of-use#licenses
+http://ckeditor.com/pricing
+
+Add-on itself is under Apache 2.0 license, to allow full usage of it also in closed source projects.
+https://www.apache.org/licenses/LICENSE-2.0
+
+Demo project is licensed as LGPL, as it uses CKEditor's JavaScript library as Open Source project.
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html
+
+Add-on and demo code are based on work done by following companies and people:
+Yozons, Inc. https://github.com/OpenESignForms/vaadin-ckeditor/tree/master/VaadinCKEditor
+
