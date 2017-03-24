@@ -4,7 +4,7 @@
 
 CKEditor is a UI component add-on for Vaadin 8.
 
-This project is fork of [vaadin-ckeditor](https://github.com/OpenESignForms/vaadin-ckeditor/tree/master/VaadinCKEditor) project from Yozons, Inc.
+This project is fork of [vaadin-ckeditor](https://github.com/OpenESignForms/vaadin-ckeditor/tree/master/VaadinCKEditor) project from Yozons, Inc. (David Wall)
 
 ## Licensing
 
@@ -99,6 +99,6 @@ MyComponent is written by <...>
 
 ## Getting started
 
-Here is a simple example on how to try out the add-on component:
+Notice that this add-on can be used without copying CKEditor javascript library to project. As it will by default load JavaScript library from ckeditor.com.
 
 TODO, see documentation of old add-on.
