@@ -1,6 +1,6 @@
 # CKEditor Add-on for Vaadin
 
-[![Build Status](http://siika.fi:8888/jenkins/job/CKEditor%20(Vaadin)/badge/icon)](http://siika.fi:8888/jenkins/job/CKEditor%20(Vaadin)/)
+[![Build Status](https://epic.siika.fi/jenkins/job/CKEditor%20(Vaadin)/badge/icon)](https://epic.siika.fi/jenkins/job/CKEditor%20(Vaadin)/)
 
 CKEditor is a UI component add-on for Vaadin 8.
 
