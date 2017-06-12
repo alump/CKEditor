@@ -1,6 +1,6 @@
 # CKEditor Add-on for Vaadin
 
-[![Build Status](http://siika.fi:8888/jenkins/job/CKEditor%20(Vaadin)/badge/icon)](http://siika.fi:8888/jenkins/job/CKEditor%20(Vaadin)/)
+[![Build Status](https://epic.siika.fi/jenkins/job/CKEditor%20(Vaadin)/badge/icon)](https://epic.siika.fi/jenkins/job/CKEditor%20(Vaadin)/)
 
 CKEditor is a UI component add-on for Vaadin 8.
 
@@ -20,6 +20,15 @@ CKEditor add-on's demo project has LGPL license, as it uses Open Source version 
 ## Online demo
 
 Try the add-on demo at http://app.siika.fi/CKEditorDemo
+
+## Release notes
+
+### Version 0.1.1 (2017-06-12)
+- Add missing setImmediate to get value change events faster
+- Plugin example to demo project
+
+### Version 0.1.0 (2017-03-23)
+- Initial release. Vaadin 8 port of Vaadin-CKEditor add-on from Yozons, Inc
 
 ## Download release
 
@@ -63,14 +72,7 @@ Debugging client side code in the ckeditor-demo project:
   - run "mvn vaadin:run-codeserver" on a separate console while the application is running
   - activate Super Dev Mode in the debug window of the application or by adding ?superdevmode to the URL
   - You can access Java-sources and set breakpoints inside Chrome if you enable source maps from inspector settings.
- 
-## Release notes
 
-### Version 0.1.1 (TBD)
-- TBD
-
-### Version 0.1.0 (2017-03-23)
-- Initial release. Vaadin 8 port of Vaadin-CKEditor add-on from Yozons, Inc
 
 ## Roadmap
 - Proper clean up of code, removing dependency to legacy classes

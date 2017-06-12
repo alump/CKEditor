@@ -55,6 +55,7 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 	private boolean protectedBody = false;
 	private boolean viewWithoutEditor = false;
 	private boolean focusRequested = false;
+	private boolean immediate = false;
 	protected LinkedList<VaadinSaveListener> vaadinSaveListenerList;
 
 	private boolean textIsDirty;
@@ -62,8 +63,8 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 
 	protected AbstractCKEditorTextField() {
 		super.setValue("");
-		setWidth("100%");
-		setHeight("300px");
+		setWidth(100, Unit.PERCENTAGE);
+		setHeight(300, Unit.PIXELS);
 	}
 
     protected AbstractCKEditorTextField(CKEditorConfig config) {
@@ -121,7 +122,8 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 			target.addVariable(this, VCKEditorTextField.VAR_TEXT, currValue);
 			textIsDirty = false;
 		}
-		
+
+		target.addAttribute(VCKEditorTextField.ATTR_IMMEDIATE, isImmediate());
 		target.addAttribute(VCKEditorTextField.ATTR_READONLY, isReadOnly());
 		target.addAttribute(VCKEditorTextField.ATTR_VIEW_WITHOUT_EDITOR, isViewWithoutEditor());
 		//System.out.println("*** TRACE FROM SERVER paintContent() - sending value to browser (" + currValue.length() + ") >>>" + currValue + "<<< " + System.currentTimeMillis());
@@ -270,7 +272,7 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
     public void focus() {
 		super.focus();
 		focusRequested = true;
-		requestRepaint();
+		markAsDirty();
     }
 	
 	public boolean isViewWithoutEditor() {
@@ -278,7 +280,7 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 	}
 	public void setViewWithoutEditor(boolean v) {
 		viewWithoutEditor = v;
-		requestRepaint();
+		markAsDirty();
 	}
 	
 	public void insertHtml(String html) {
@@ -286,7 +288,7 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 			insertHtml = html;
 		else 
 			insertHtml += html;
-		requestRepaint();
+		markAsDirty();
 	}
 	
 	public void insertText(String text) {
@@ -294,12 +296,12 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 			insertText = text;
 		else 
 			insertText += text;
-		requestRepaint();
+		markAsDirty();
 	}
 
 	public void setProtectedBody(boolean protectedBody) {
 		this.protectedBody = protectedBody;
-		requestRepaint();
+		markAsDirty();
 	}
 
 	public boolean isProtectedBody() {
@@ -359,5 +361,22 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
         
         public void selectionChange(SelectionChangeEvent event);
     }
+
+	/**
+	 * Set CKEditor immediate to get change events faster
+	 * @param immediate
+	 */
+	public void setImmediate(boolean immediate) {
+		this.immediate = immediate;
+		markAsDirty();
+	}
+
+	/**
+	 * Is CKEditor in immediate mode
+	 * @return
+	 */
+	public boolean isImmediate() {
+		return this.immediate;
+	}
 
 }

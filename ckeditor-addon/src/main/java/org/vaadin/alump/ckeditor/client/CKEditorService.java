@@ -42,11 +42,13 @@ public class CKEditorService {
 	public static synchronized void loadLibrary(ScheduledCommand afterLoad) {
 		if (! libraryLoadInited) {
 			libraryLoadInited = true;
-			String url = GWT.getModuleBaseURL() + "ckeditor/ckeditor.js";
-			ScriptElement se = Document.get().createScriptElement();
-			se.setSrc(url);
-			se.setType("text/javascript");
-			Document.get().getElementsByTagName("head").getItem(0).appendChild(se);
+			if(!libraryReady()) {
+				String url = GWT.getModuleBaseURL() + "ckeditor/ckeditor.js";
+				ScriptElement se = Document.get().createScriptElement();
+				se.setSrc(url);
+				se.setType("text/javascript");
+				Document.get().getElementsByTagName("head").getItem(0).appendChild(se);
+			}
 			Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {				
 				@Override
 				public boolean execute() {

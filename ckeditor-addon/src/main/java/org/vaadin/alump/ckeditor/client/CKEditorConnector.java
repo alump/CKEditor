@@ -25,8 +25,7 @@ import com.vaadin.shared.ui.Connect;
 import org.vaadin.alump.ckeditor.AbstractCKEditorTextField;
 
 @Connect(AbstractCKEditorTextField.class)
-public class CKEditorConnector extends LegacyConnector  implements SimpleManagedLayout {
-	private static final long serialVersionUID = -3096333767592095605L;
+public class CKEditorConnector extends LegacyConnector implements SimpleManagedLayout {
 
 	@Override
     public VCKEditorTextField getWidget() {

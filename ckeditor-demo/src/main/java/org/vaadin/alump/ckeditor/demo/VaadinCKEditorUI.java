@@ -93,9 +93,10 @@ public class VaadinCKEditorUI extends UI {
 		config1.setResizeDir(CKEditorConfig.RESIZE_DIR.HORIZONTAL);
 		config1.disableSpellChecker();
 		config1.setHeight("300px");
+		config1.addToExtraPlugins("exampleplugin");
 		
 		//final CKEditorTextField ckEditorTextField1 = new CKEditorTextField(config1);
-		final AbstractCKEditorTextField ckEditorTextField1 = new CKEditorTextField(config1);
+		final AbstractCKEditorTextField ckEditorTextField1 = new CKEditorPluginExample(config1);
 		ckEditorTextField1.setHeight("440px"); // account for 300px editor plus toolbars
 		mainView.addComponent(ckEditorTextField1);
 		
@@ -121,45 +122,25 @@ public class VaadinCKEditorUI extends UI {
 		*/
 		
 		Button resetTextButton1 = new Button("Reset editor #1");
-		resetTextButton1.addClickListener( new Button.ClickListener() {			
-			private static final long serialVersionUID = 2872667648717255301L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if ( ! ckEditorTextField1.isReadOnly() ) {
-					ckEditorTextField1.setValue(editor1InitialValue);
-				}
+		resetTextButton1.addClickListener(event -> {
+			if ( ! ckEditorTextField1.isReadOnly() ) {
+				ckEditorTextField1.setValue(editor1InitialValue);
 			}
 		});
 		
 		Button toggleReadOnlyButton1 = new Button("Toggle read-only editor #1");
-		toggleReadOnlyButton1.addClickListener( new Button.ClickListener() {			
-			private static final long serialVersionUID = 8462908141468254844L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
+		toggleReadOnlyButton1.addClickListener(event -> {
 				ckEditorTextField1.setReadOnly( ! ckEditorTextField1.isReadOnly() );
-			}
 		});
 
 		Button toggleViewWithoutEditorButton1 = new Button("Toggle view-without-editor #1");
-		toggleViewWithoutEditorButton1.addClickListener( new Button.ClickListener() {			
-			private static final long serialVersionUID = 8122286299515325693L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
+		toggleViewWithoutEditorButton1.addClickListener(event ->  {
 				ckEditorTextField1.setViewWithoutEditor( ! ckEditorTextField1.isViewWithoutEditor() );
-			}
 		});
 
 		Button toggleVisibleButton1 = new Button("Toggle visible editor #1");
-		toggleVisibleButton1.addClickListener( new Button.ClickListener() {			
-			private static final long serialVersionUID = -6715135605688427318L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
+		toggleVisibleButton1.addClickListener( event -> {
 				ckEditorTextField1.setVisible( ! ckEditorTextField1.isVisible() );
-			}
 		});
 		HorizontalLayout buttonsLayout = new HorizontalLayout(resetTextButton1,toggleReadOnlyButton1,toggleViewWithoutEditorButton1,toggleVisibleButton1);
 		buttonsLayout.setSpacing(true);
