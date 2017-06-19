@@ -10,27 +10,21 @@
 package org.vaadin.alump.ckeditor.demo;
 
 
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.ContentMode;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import com.vaadin.annotations.Theme;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import org.vaadin.alump.ckeditor.CKEditorConfig;
 import org.vaadin.alump.ckeditor.AbstractCKEditorTextField;
 import org.vaadin.alump.ckeditor.CKEditorTextField;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * HISTORY:
@@ -45,24 +39,38 @@ import javax.servlet.annotation.WebServlet;
 @Title("CKEditor Demo")
 public class VaadinCKEditorUI extends UI {
 
+	//private Label pushUpdateLabel = new Label();
+	//private CheckBox enablePushEvents;
+	private AtomicInteger pushCounter = new AtomicInteger(0);
+
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = VaadinCKEditorUI.class, widgetset = "org.vaadin.alump.ckeditor.demo.WidgetSet")
 	public static class Servlet extends VaadinServlet {
 	}
 
+	private Component createSeparator() {
+		Label separator = new Label("&nbsp;");
+		separator.addStyleName("separator");
+		separator.setContentMode(ContentMode.HTML);
+		return separator;
+	}
+
 	@Override
 	public void init(VaadinRequest request) {
+
+		//Enable to test effects of other UIDL calls to cursor position
+		//setPollInterval(5000);
 		
 		getPage().setTitle("Vaadin CKEditor UI");
 		
 		VerticalLayout mainView = new VerticalLayout();
 		setContent(mainView);
-		
-		mainView.addComponent(new Button("Hit server"));
-		
-		Label separator = new Label("&nbsp;");
-		separator.setContentMode(ContentMode.HTML);
-		mainView.addComponent(separator); 
+
+		/*
+		enablePushEvents = new CheckBox("Enable push events");
+		enablePushEvents.addValueChangeListener(this::enablePushEvents);
+		mainView.addComponents(new HorizontalLayout(enablePushEvents, pushUpdateLabel));
+		*/
 
 
 		/* See http://ckeditor.com/latest/samples/plugins/toolbar/toolbar.html for the official info.
@@ -97,29 +105,15 @@ public class VaadinCKEditorUI extends UI {
 		
 		//final CKEditorTextField ckEditorTextField1 = new CKEditorTextField(config1);
 		final AbstractCKEditorTextField ckEditorTextField1 = new CKEditorPluginExample(config1);
+		ckEditorTextField1.setImmediate(true);
 		ckEditorTextField1.setHeight("440px"); // account for 300px editor plus toolbars
 		mainView.addComponent(ckEditorTextField1);
 		
 		ckEditorTextField1.setValue(editor1InitialValue);
 		ckEditorTextField1.addValueChangeListener(e -> {
-				Notification.show("CKEditor v" + ckEditorTextField1.getVersion() + "/" + getVersion() + " - #1 contents: " + e.getValue());
+				System.out.println("CKEditor v" + ckEditorTextField1.getVersion() + "/" + getVersion()
+						+ " - #1 contents: " + e.getValue());
 		});
-		// This selection change listener is commented out for general use, but it does appear to work in preliminary testing as of 
-		// version 7.10.2 (15 July 2015) if you need it.
-		/*
-		ckEditorTextField1.addSelectionChangeListener(new SelectionChangeListener() {
-			private static final long serialVersionUID = 1270295222444271706L;
-
-			public void selectionChange(SelectionChangeEvent event) {
-				if ( event.hasSelectedHtml() ) {
-					Notification.show("CKEditor selected HTML: " + event.getSelectedHtml(), Type.ERROR_MESSAGE);
-					ckEditorTextField1.focus();
-				} else {
-					Notification.show("CKEditor un-select reported", Type.ERROR_MESSAGE);
-				}
-			}
-		});
-		*/
 		
 		Button resetTextButton1 = new Button("Reset editor #1");
 		resetTextButton1.addClickListener(event -> {
@@ -146,9 +140,7 @@ public class VaadinCKEditorUI extends UI {
 		buttonsLayout.setSpacing(true);
 		mainView.addComponent( buttonsLayout );
 
-		separator = new Label("&nbsp;");
-		separator.setContentMode(ContentMode.HTML);
-		mainView.addComponent(separator); 
+		mainView.addComponent(createSeparator());
 		
 		// Now add in a second editor....
 		final String editor2InitialValue = 
@@ -199,10 +191,6 @@ public class VaadinCKEditorUI extends UI {
 		buttonsLayout = new HorizontalLayout(resetTextButton2,toggleReadOnlyButton2,toggleViewWithoutEditorButton2,toggleVisibleButton2);
 		buttonsLayout.setSpacing(true);
 		mainView.addComponent( buttonsLayout );
-
-		separator = new Label("&nbsp;");
-		separator.setContentMode(ContentMode.HTML);
-		mainView.addComponent(separator); 
 
 		buttonsLayout = new HorizontalLayout();
 		buttonsLayout.setSpacing(true);
@@ -278,7 +266,30 @@ public class VaadinCKEditorUI extends UI {
 				event.getButton().getUI().addWindow(sub);
         }));
 	}
-	
+
+	/*
+	private void enablePushEvents(HasValue.ValueChangeEvent<Boolean> event) {
+		if(event.getValue()) {
+			pushCounter.set(0);
+			Runnable runnable = () -> {
+				try {
+					while(true) {
+						if(!VaadinCKEditorUI.this.isAttached() || !enablePushEvents.getValue()) {
+							break;
+						}
+						int value = pushCounter.incrementAndGet();
+						VaadinCKEditorUI.this.getUI().access(() -> pushUpdateLabel.setValue("#" + value));
+						Thread.sleep(5000);
+					}
+				} catch(InterruptedException e) {
+				}
+			};
+			Thread thread = new Thread(runnable);
+			thread.start();
+		}
+	}
+	*/
+
 	public String getVersion() {
 		return "0.1.0";
 	}

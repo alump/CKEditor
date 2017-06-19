@@ -23,6 +23,9 @@ Try the add-on demo at http://app.siika.fi/CKEditorDemo
 
 ## Release notes
 
+### Version 0.1.2 (TBD)
+- Fix value change handling (avoid loops)
+
 ### Version 0.1.1 (2017-06-12)
 - Add missing setImmediate to get value change events faster
 - Plugin example to demo project

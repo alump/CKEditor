@@ -96,11 +96,7 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 
 	@Override
 	protected void doSetValue(String s) {
-		if ( s == null ) {
-			s = "";
-		}
-        value = s;
-		requestRepaint();
+        value = s == null ? "" : s;
 		textIsDirty = true;
 	}
  
@@ -126,8 +122,7 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 		target.addAttribute(VCKEditorTextField.ATTR_IMMEDIATE, isImmediate());
 		target.addAttribute(VCKEditorTextField.ATTR_READONLY, isReadOnly());
 		target.addAttribute(VCKEditorTextField.ATTR_VIEW_WITHOUT_EDITOR, isViewWithoutEditor());
-		//System.out.println("*** TRACE FROM SERVER paintContent() - sending value to browser (" + currValue.length() + ") >>>" + currValue + "<<< " + System.currentTimeMillis());
-		
+
 		if (config != null) {
 			target.addAttribute(VCKEditorTextField.ATTR_INPAGECONFIG, config.getInPageConfig());
 			
@@ -200,18 +195,14 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
             Object currValueObject = getValue();
             final String oldValue = currValueObject == null ? "" : currValueObject.toString();
             if ( ! newValue.equals(oldValue) ) {
-        		//System.out.println("*** TRACE FROM CLIENT changeVariables() - new value (" + newValue.length() + ") >>>" + newValue + "<<< " + System.currentTimeMillis());
-                setValue(newValue, true);
+        		setValue(newValue, true);
             }
         }
         
         if (variables.containsKey(FocusEvent.EVENT_ID)) {
-			//System.out.println("------------------------------");
-    		//System.out.println("*** TRACE FROM CLIENT changeVariables() - FOCUS - " + System.currentTimeMillis());
             fireEvent(new FocusEvent(this));
         }
         if (variables.containsKey(BlurEvent.EVENT_ID)) {
-    		//System.out.println("*** TRACE FROM CLIENT changeVariables() - BLUR - " + System.currentTimeMillis());
             fireEvent(new BlurEvent(this));
         }
         
