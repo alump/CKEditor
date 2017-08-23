@@ -23,8 +23,9 @@ Try the add-on demo at http://app.siika.fi/CKEditorDemo
 
 ## Release notes
 
-### Version 0.1.2 (TBD)
-- Fix value change handling (avoid loops)
+### Version 0.1.2 (2017-08-22)
+- Fix value change handling (avoid loops) - Issue #3 and #5
+- Use HTTPS to load js file from ckeditor.com (CKEditorTextField) - Issue #7
 
 ### Version 0.1.1 (2017-06-12)
 - Add missing setImmediate to get value change events faster
