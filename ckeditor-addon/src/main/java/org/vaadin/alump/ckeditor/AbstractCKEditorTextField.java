@@ -57,6 +57,7 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 	private boolean focusRequested = false;
 	private boolean immediate = false;
 	protected LinkedList<VaadinSaveListener> vaadinSaveListenerList;
+	protected LinkedList<CustomEventListener> customEventListenerList;
 
 	private boolean textIsDirty;
 	protected String value;
@@ -218,6 +219,11 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
         if (variables.containsKey(VCKEditorTextField.VAR_VAADIN_SAVE_BUTTON_PRESSED) && ! isReadOnly()) {
         	notifyVaadinSaveListeners();
         }
+
+		// See if customevent was fired
+		if (variables.containsKey(VCKEditorTextField.VAR_ON_CUSTOM_EVENT) && ! isReadOnly()) {
+			notifyCustomEventListeners((String)variables.get(VCKEditorTextField.VAR_ON_CUSTOM_EVENT));
+		}
     }
 	
 	@Override
@@ -315,6 +321,24 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 				listener.vaadinSave(this);
 		}
 	}
+
+	public synchronized void addCustomEventListener(CustomEventListener listener) {
+		if ( customEventListenerList == null ) {
+			customEventListenerList = new LinkedList<CustomEventListener>();
+		}
+		customEventListenerList.add(listener);
+	}
+	public synchronized void removeCustomEventListener(CustomEventListener listener) {
+		if ( customEventListenerList != null ) {
+			customEventListenerList.remove(listener);
+		}
+	}
+	synchronized void notifyCustomEventListeners(String param) {
+		if ( customEventListenerList != null ) {
+			for( CustomEventListener listener : customEventListenerList )
+				listener.onCustomEvent(this, param);
+		}
+	}
 	
 	public interface VaadinSaveListener extends Serializable {
 		/**
@@ -323,6 +347,15 @@ public abstract class AbstractCKEditorTextField extends AbstractField<String>
 	     * @param editor the CKEditorTextField that was saved
 	     */
 		void vaadinSave(AbstractCKEditorTextField editor);
+	}
+
+	public interface CustomEventListener extends Serializable {
+		/**
+		 * Notifies this listener that a custom event has fired
+		 *
+		 * @param editor the CKEditorTextField that fired the event
+		 */
+		void onCustomEvent(AbstractCKEditorTextField editor, String param);
 	}
 	
 	

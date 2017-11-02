@@ -64,6 +64,7 @@ public class VCKEditorTextField extends Widget implements Paintable, CKEditorSer
 	public static final String ATTR_PROTECTED_BODY = "protected_body";
 	public static final String VAR_TEXT = "text";
 	public static final String VAR_VAADIN_SAVE_BUTTON_PRESSED = "vaadinsave";
+	public static final String VAR_ON_CUSTOM_EVENT = "customevent";
 	public static final String VAR_VERSION = "version";
 	
 	public static final String EVENT_SELECTION_CHANGE = "selectionChange";
@@ -301,6 +302,14 @@ public class VCKEditorTextField extends Widget implements Paintable, CKEditorSer
 			}
 			clientToServer.updateVariable(paintableId, VAR_VAADIN_SAVE_BUTTON_PRESSED,"",false); // inform that the button was pressed too
 			clientToServer.sendPendingVariableChanges(); // ensure anything queued up goes now on SAVE
+		}
+	}
+
+	// Listener callback
+	@Override
+	public void onCustomEvent(String param) {
+		if ( ckEditorIsReady && ! readOnly ) {
+			clientToServer.updateVariable(paintableId, VAR_ON_CUSTOM_EVENT,param,true);
 		}
 	}
 

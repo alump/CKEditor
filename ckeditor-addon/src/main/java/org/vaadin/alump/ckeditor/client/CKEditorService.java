@@ -177,6 +177,7 @@ public class CKEditorService {
 		void onBlur();
 		void onFocus();
 		void onSave();
+		void onCustomEvent(String param);
 	}
 
 }

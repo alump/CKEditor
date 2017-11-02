@@ -102,12 +102,22 @@ public class VaadinCKEditorUI extends UI {
 		config1.disableSpellChecker();
 		config1.setHeight("300px");
 		config1.addToExtraPlugins("exampleplugin");
-		
+		config1.addToExtraPlugins("inserttextplugin");
+
 		//final CKEditorTextField ckEditorTextField1 = new CKEditorTextField(config1);
 		final AbstractCKEditorTextField ckEditorTextField1 = new CKEditorPluginExample(config1);
 		ckEditorTextField1.setImmediate(true);
 		ckEditorTextField1.setHeight("440px"); // account for 300px editor plus toolbars
 		mainView.addComponent(ckEditorTextField1);
+
+		ckEditorTextField1.addCustomEventListener(new AbstractCKEditorTextField.CustomEventListener() {
+			@Override
+			public void onCustomEvent(AbstractCKEditorTextField editor, String param) {
+				if(param!=null && param.equals("inserttext")){
+					editor.insertText("Text from vaadin");
+				}
+			}
+		});
 		
 		ckEditorTextField1.setValue(editor1InitialValue);
 		ckEditorTextField1.addValueChangeListener(e -> {
