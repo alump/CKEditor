@@ -91,12 +91,16 @@ public class CKEditor extends JavaScriptObject {
 	 	this.on( 'focus', function( ev ) {
  			ev.listenerData.@org.vaadin.alump.ckeditor.client.CKEditorService.CKEditorListener::onFocus()();
     	}, null, listener);
-    	
-     	this.on( 'vaadinsave', function( ev ) {
-	 		ev.listenerData.@org.vaadin.alump.ckeditor.client.CKEditorService.CKEditorListener::onSave()();
-    	}, null, listener);
-    	
-    	// hook into the change events for ckEditor
+
+        this.on( 'vaadinsave', function( ev ) {
+            ev.listenerData.@org.vaadin.alump.ckeditor.client.CKEditorService.CKEditorListener::onSave()();
+        }, null, listener);
+
+        this.on( 'customevent', function( ev ) {
+            ev.listenerData.@org.vaadin.alump.ckeditor.client.CKEditorService.CKEditorListener::onCustomEvent(Ljava/lang/String;)(ev.data);
+        }, null, listener);
+
+        // hook into the change events for ckEditor
 		this.on('change', function(ev) { 
 			ev.listenerData.@org.vaadin.alump.ckeditor.client.CKEditorService.CKEditorListener::onChange()();
 		}, null, listener);
